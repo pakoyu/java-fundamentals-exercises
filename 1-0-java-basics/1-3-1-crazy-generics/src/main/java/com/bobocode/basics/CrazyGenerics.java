@@ -100,8 +100,8 @@ public class CrazyGenerics {
      *
      * @param <T> – the type of objects that can be processed
      */
-    interface StrictProcessor { // todo: make it generic
-        void process(Object obj);
+    interface StrictProcessor<T extends Serializable & Comparable<? super T>> { // todo: make it generic
+        void process(T obj);
     }
 
     /**
@@ -136,7 +136,12 @@ public class CrazyGenerics {
      *
      * @param <E> a type of collection elements
      */
-    interface ComparableCollection { // todo: refactor it to make generic and provide a default impl of compareTo
+     interface ComparableCollection<E> extends Collection<E>, Comparable<Collection<?>> { // todo: refactor it to make generic and provide a default impl of compareTo
+
+        @Override
+        default int compareTo(Collection<?> o) {
+            return Integer.compare(this.size(), o.size());
+        }
     }
 
     /**
@@ -163,7 +168,7 @@ public class CrazyGenerics {
          * @param entities provided collection of entities
          * @return true if at least one of the elements has null id
          */
-        public static boolean hasNewEntities(Collection<BaseEntity> entities) {
+        public static boolean hasNewEntities(Collection<? extends BaseEntity> entities) {
             throw new ExerciseNotCompletedException(); // todo: refactor parameter and implement method
         }
 
@@ -231,8 +236,13 @@ public class CrazyGenerics {
         public static void swap(List<?> elements, int i, int j) {
             Objects.checkIndex(i, elements.size());
             Objects.checkIndex(j, elements.size());
-            throw new ExerciseNotCompletedException(); // todo: complete method implementation 
+            swapt(elements, i, j);
         }
+        private static<T> void swapt(List<T> elements, int i, int j) {
+            T t = elements.get(i);
+            elements.set(i, elements.get(j));
+            elements.set(j, t);
 
+        }
     }
 }

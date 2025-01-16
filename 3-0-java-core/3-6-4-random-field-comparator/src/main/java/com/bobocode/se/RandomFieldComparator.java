@@ -1,6 +1,8 @@
 package com.bobocode.se;
 
 import com.bobocode.util.ExerciseNotCompletedException;
+
+import java.lang.reflect.Field;
 import java.util.Comparator;
 
 /**
@@ -17,9 +19,24 @@ import java.util.Comparator;
  * @author Stanislav Zabramnyi
  */
 public class RandomFieldComparator<T> implements Comparator<T> {
-
+    private Class<T> targetType;
     public RandomFieldComparator(Class<T> targetType) {
-        throw new ExerciseNotCompletedException(); // todo: implement this constructor;
+        if (targetType == null) {
+            throw new NullPointerException();
+        }
+        Field[] fields = targetType.getDeclaredFields();
+        int count = 0;
+        for (Field field: fields) {
+            if (Comparable.class.isAssignableFrom(field.getType())) {
+                count +=1;
+            }
+        }
+        System.out.println(fields.length);
+        System.out.println(count);
+        if (count == fields.length) {
+            throw new IllegalArgumentException();
+        }
+        this.targetType = targetType;
     }
 
     /**
@@ -34,7 +51,30 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      */
     @Override
     public int compare(T o1, T o2) {
-        throw new ExerciseNotCompletedException(); // todo: implement this method;
+        Class cls = o1.getClass();
+        Field[] fields = cls.getDeclaredFields();
+        Field field = fields[0];
+        field.setAccessible(true);
+
+        if (o1 == null) {
+            return 1;
+        }
+        if (o2 == null) {
+            return -1;
+        }
+        if (o1 == null && o2 == null) {
+            return 0;
+        }
+        try {
+            if (field.getGenericType().equals(Comparable.class)) {
+                Comparable c = (Comparable) field.get(o1);
+                return c.compareTo(field.get(o2));
+            }
+        } catch ( IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+        return 0;// todo: implement this method;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method;
     }
 
     /**
