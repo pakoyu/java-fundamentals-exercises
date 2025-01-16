@@ -3,6 +3,7 @@ package com.bobocode.se;
 import com.bobocode.util.ExerciseNotCompletedException;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -12,28 +13,29 @@ import java.util.Comparator;
  * If no field is available to compare, the constructor throws {@link IllegalArgumentException}
  *
  * @param <T> the type of the objects that may be compared by this comparator
- *<p><p>
- *  <strong>TODO: to get the most out of your learning, <a href="https://www.bobocode.com">visit our website</a></strong>
- *  <p>
- *
+ *            <p><p>
+ *            <strong>TODO: to get the most out of your learning, <a href="https://www.bobocode.com">visit our website</a></strong>
+ *            <p>
  * @author Stanislav Zabramnyi
  */
 public class RandomFieldComparator<T> implements Comparator<T> {
     private Class<T> targetType;
+
     public RandomFieldComparator(Class<T> targetType) {
         if (targetType == null) {
             throw new NullPointerException();
         }
         Field[] fields = targetType.getDeclaredFields();
         int count = 0;
-        for (Field field: fields) {
-            if (Comparable.class.isAssignableFrom(field.getType())) {
-                count +=1;
+        for (Field field : fields) {
+//            System.out.println("Primirive  " + field.getType().isPrimitive());
+            if (Comparable.class.isAssignableFrom(field.getType()) || field.getType().isPrimitive()) {
+                count += 1;
             }
+//            System.out.println(count);
         }
-        System.out.println(fields.length);
-        System.out.println(count);
-        if (count == fields.length) {
+//        System.out.println("Lenght - " +fields.length);
+        if (count != fields.length) {
             throw new IllegalArgumentException();
         }
         this.targetType = targetType;
@@ -46,8 +48,8 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      * @param o1
      * @param o2
      * @return positive int in case of first parameter {@param o1} is greater than second one {@param o2},
-     *         zero if objects are equals,
-     *         negative int in case of first parameter {@param o1} is less than second one {@param o2}.
+     * zero if objects are equals,
+     * negative int in case of first parameter {@param o1} is less than second one {@param o2}.
      */
     @Override
     public int compare(T o1, T o2) {
@@ -70,7 +72,7 @@ public class RandomFieldComparator<T> implements Comparator<T> {
                 Comparable c = (Comparable) field.get(o1);
                 return c.compareTo(field.get(o2));
             }
-        } catch ( IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             ex.printStackTrace();
         }
         return 0;// todo: implement this method;
