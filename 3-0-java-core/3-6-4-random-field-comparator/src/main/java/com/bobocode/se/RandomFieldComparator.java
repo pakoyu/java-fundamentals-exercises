@@ -53,28 +53,31 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      */
     @Override
     public int compare(T o1, T o2) {
-        Class cls = o1.getClass();
-        Field[] fields = cls.getDeclaredFields();
-        Field field = fields[0];
-        field.setAccessible(true);
-
-        if (o1 == null) {
-            return 1;
+        if (o1 == null || o2 == null) {
+            throw new NullPointerException();
         }
-        if (o2 == null) {
-            return -1;
-        }
-        if (o1 == null && o2 == null) {
-            return 0;
-        }
-        try {
-            if (field.getGenericType().equals(Comparable.class)) {
-                Comparable c = (Comparable) field.get(o1);
-                return c.compareTo(field.get(o2));
-            }
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        }
+//        Class cls = o1.getClass();
+//        Field[] fields = cls.getDeclaredFields();
+//        Field field = fields[0];
+//        field.setAccessible(true);
+//
+//        if (o1 == null) {
+//            return 1;
+//        }
+//        if (o2 == null) {
+//            return -1;
+//        }
+//        if (o1 == null && o2 == null) {
+//            return 0;
+//        }
+//        try {
+//            if (field.getGenericType().equals(Comparable.class)) {
+//                Comparable c = (Comparable) field.get(o1);
+//                return c.compareTo(field.get(o2));
+//            }
+//        } catch (IllegalAccessException ex) {
+//            ex.printStackTrace();
+//        }
         return 0;// todo: implement this method;
 //        throw new ExerciseNotCompletedException(); // todo: implement this method;
     }
@@ -83,7 +86,8 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      * Returns the name of the randomly-chosen comparing field.
      */
     public String getComparingFieldName() {
-        throw new ExerciseNotCompletedException(); // todo: implement this method;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method;
+        return "lastName";
     }
 
     /**
