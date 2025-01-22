@@ -19,23 +19,26 @@ import java.util.Comparator;
  * @author Stanislav Zabramnyi
  */
 public class RandomFieldComparator<T> implements Comparator<T> {
-    private Class<T> targetType;
+
+    public Class<T> targetType;
+
+    public Field field;
+
+    public boolean count = false;
 
     public RandomFieldComparator(Class<T> targetType) {
         if (targetType == null) {
             throw new NullPointerException();
         }
-        Field[] fields = targetType.getDeclaredFields();
-        int count = 0;
+        Class cls = targetType;
+        Field[] fields = cls.getDeclaredFields();
         for (Field field : fields) {
-//            System.out.println("Primirive  " + field.getType().isPrimitive());
-            if (Comparable.class.isAssignableFrom(field.getType()) || field.getType().isPrimitive()) {
-                count += 1;
+            if (Comparable.class.isAssignableFrom(field.getType()) && !count) {
+                this.count = true;
+                this.field = field;
             }
-//            System.out.println(count);
         }
-//        System.out.println("Lenght - " +fields.length);
-        if (count != fields.length) {
+        if (!count) {
             throw new IllegalArgumentException();
         }
         this.targetType = targetType;
@@ -56,28 +59,22 @@ public class RandomFieldComparator<T> implements Comparator<T> {
         if (o1 == null || o2 == null) {
             throw new NullPointerException();
         }
-//        Class cls = o1.getClass();
-//        Field[] fields = cls.getDeclaredFields();
-//        Field field = fields[0];
-//        field.setAccessible(true);
-//
-//        if (o1 == null) {
-//            return 1;
-//        }
-//        if (o2 == null) {
-//            return -1;
-//        }
-//        if (o1 == null && o2 == null) {
-//            return 0;
-//        }
-//        try {
-//            if (field.getGenericType().equals(Comparable.class)) {
-//                Comparable c = (Comparable) field.get(o1);
-//                return c.compareTo(field.get(o2));
-//            }
-//        } catch (IllegalAccessException ex) {
-//            ex.printStackTrace();
-//        }
+        field.setAccessible(true);
+        try {
+            if (field.get(o1) == null && field.get(o2) == null) {
+                return 0;
+            }
+            if (field.get(o1) == null) {
+                return 1;
+            }
+            if (field.get(o2) == null) {
+                return -1;
+            }
+            Comparable c = (Comparable) field.get(o1);
+            return c.compareTo(field.get(o2));
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
         return 0;// todo: implement this method;
 //        throw new ExerciseNotCompletedException(); // todo: implement this method;
     }
@@ -86,8 +83,8 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      * Returns the name of the randomly-chosen comparing field.
      */
     public String getComparingFieldName() {
+        return field.getName(); //todo: implement this method;
 //        throw new ExerciseNotCompletedException(); // todo: implement this method;
-        return "lastName";
     }
 
     /**
@@ -98,6 +95,7 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      */
     @Override
     public String toString() {
-        throw new ExerciseNotCompletedException(); // todo: implement this method;
+        return "Random field comparator of class '" + targetType.getSimpleName() + "' is comparing '" + this.getComparingFieldName() + "'"; // todo: implement this method;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method;
     }
 }
