@@ -101,8 +101,7 @@ public class RandomFieldComparator<T> implements Comparator<T> {
      */
     @Override
     public String toString() {
-        return  "Random field comparator of class '"+ targetType.getCanonicalName() + "' is comparing '" + this.getComparingFieldName() +"'";
-//        return "Random field comparator of class "+ targetType.getName() + " is comparing " + field.getName();
+        return "Random field comparator of class '"+ targetType.getSimpleName() + "' is comparing '" + this.getComparingFieldName() +"'";
 //        throw new ExerciseNotCompletedException(); // todo: implement this method;
     }
 }
