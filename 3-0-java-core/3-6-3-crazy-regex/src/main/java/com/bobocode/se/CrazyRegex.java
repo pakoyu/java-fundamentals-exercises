@@ -172,7 +172,8 @@ public class CrazyRegex {
      * @return a pattern that looks for all open braces
      */
     public Pattern findAllOpenBraces() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("\\{+");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -181,7 +182,8 @@ public class CrazyRegex {
      * @return a pattern that looks for everything inside []
      */
     public Pattern findOnlyResources() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("\\[\\b\\w+\\b]");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
