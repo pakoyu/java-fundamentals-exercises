@@ -182,7 +182,7 @@ public class CrazyRegex {
      * @return a pattern that looks for everything inside []
      */
     public Pattern findOnlyResources() {
-        return Pattern.compile("\\[\\b\\w+\\b]");
+        return Pattern.compile("(?<=\\[)\\b\\w+\\b(?=\\])");
 //        throw new ExerciseNotCompletedException();
     }
 
@@ -192,7 +192,8 @@ public class CrazyRegex {
      * @return a pattern that looks for all https links in note.txt
      */
     public Pattern findOnlyLinksInNote() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("http(s?)://\\b\\w+\\b(\\b.\\w+\\b)+");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -201,7 +202,8 @@ public class CrazyRegex {
      * @return a pattern that looks for all http links in nasa.json
      */
     public Pattern findOnlyLinksInJson() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("http(s?)://\\b\\w+\\b(\\b.\\w+\\b)+");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -210,7 +212,8 @@ public class CrazyRegex {
      * @return a pattern that looks for all .com, .net and .edu emails
      */
     public Pattern findAllEmails() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("[a-z]+(.\\w+)?@(\\b\\w+\\b)+((.com)|(.net)|(.edu))");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -222,7 +225,8 @@ public class CrazyRegex {
      * @return a pattern that looks for phone numbers patterns above
      */
     public Pattern findAllPatternsForPhoneNumbers() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("\\(?[0-9]{3}(\\.|-|\\))[0-9]{3}(\\.|-)[0-9]{4}");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -231,7 +235,8 @@ public class CrazyRegex {
      * @return a pattern that looks for duplicates
      */
     public Pattern findOnlyDuplicates() {
-        throw new ExerciseNotCompletedException();
+        return Pattern.compile("((\\b\\w+\\b)+)\\s+\\1");
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
