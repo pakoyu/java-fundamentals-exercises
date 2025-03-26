@@ -105,7 +105,9 @@ public class CrazyLambdas {
      * @return binary sum operation
      */
     public static LongBinaryOperator longSumOperation() {
-        throw new ExerciseNotCompletedException();
+        LongBinaryOperator l = (a, b) -> a + b;
+        return l;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -114,7 +116,9 @@ public class CrazyLambdas {
      * @return string to int converter
      */
     public static ToIntFunction<String> stringToIntConverter() {
-        throw new ExerciseNotCompletedException();
+        ToIntFunction<String> tif = (s) -> Integer.parseInt(s);
+        return tif;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -125,7 +129,9 @@ public class CrazyLambdas {
      * @return a function supplier
      */
     public static Supplier<IntUnaryOperator> nMultiplyFunctionSupplier(int n) {
-        throw new ExerciseNotCompletedException();
+        Supplier<IntUnaryOperator> s  = () -> (x) -> x * n;
+        return s;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -134,7 +140,9 @@ public class CrazyLambdas {
      * @return function that composes functions with trim() function
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
-        throw new ExerciseNotCompletedException();
+        UnaryOperator<Function<String, String>> r = (s) -> (s1) -> s1.toLowerCase().trim();
+        return r;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -145,7 +153,12 @@ public class CrazyLambdas {
      * @return a thread supplier
      */
     public static Supplier<Thread> runningThreadSupplier(Runnable runnable) {
-        throw new ExerciseNotCompletedException();
+        Supplier<Thread> su = () -> {Thread t =new Thread(runnable);
+            t.start();
+            return t;
+        };
+        return su;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -164,7 +177,12 @@ public class CrazyLambdas {
      * @return a function that transforms runnable into a thread supplier
      */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
-        throw new ExerciseNotCompletedException();
+        Function<Runnable, Supplier<Thread>> f = (r) -> () -> {Thread t = new Thread(r);
+            t.start();
+            return t;
+        };
+        return f;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -188,7 +206,9 @@ public class CrazyLambdas {
      * @return a high-order function that fetches a function from a function map by a given name or returns identity()
      */
     public static BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader() {
-        throw new ExerciseNotCompletedException();
+        BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> b = (m, s) -> m.containsKey(s)? m.get(s) : IntUnaryOperator.identity();
+        return b;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -206,7 +226,9 @@ public class CrazyLambdas {
      * @return a comparator instance
      */
     public static <T, U extends Comparable<? super U>> Comparator<T> comparing(Function<? super T, ? extends U> mapper) {
-        throw new ExerciseNotCompletedException();
+        Comparator<T> c = (x, x1) ->  mapper.apply(x).compareTo(mapper.apply(x1));
+        return c;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -226,7 +248,9 @@ public class CrazyLambdas {
      */
     public static <T, U extends Comparable<? super U>> Comparator<T> thenComparing(
             Comparator<? super T> comparator, Function<? super T, ? extends U> mapper) {
-        throw new ExerciseNotCompletedException();
+        Comparator<T> c = (x, x1) -> comparator.compare(x, x1)==0?mapper.apply(x).compareTo(mapper.apply(x1)):comparator.compare(x, x1);
+        return c;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -235,7 +259,8 @@ public class CrazyLambdas {
      * @return a supplier instance
      */
     public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
-        throw new ExerciseNotCompletedException();
+        return () -> () -> () -> "WELL DONE!";
+//        throw new ExerciseNotCompletedException();
     }
 }
 
