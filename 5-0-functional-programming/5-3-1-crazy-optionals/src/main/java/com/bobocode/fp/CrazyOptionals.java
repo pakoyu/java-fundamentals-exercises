@@ -107,7 +107,8 @@ public class CrazyOptionals {
      * @return optional balance
      */
     public static Optional<BigDecimal> retrieveBalance(AccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().map(a -> a.getBalance());
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -118,7 +119,8 @@ public class CrazyOptionals {
      * @return provided account
      */
     public static Account getAccount(AccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().orElseThrow(() -> {throw new AccountNotFoundException("No Account provided!");});
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -128,7 +130,8 @@ public class CrazyOptionals {
      * @return optional credit balance
      */
     public static Optional<BigDecimal> retrieveCreditBalance(CreditAccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().flatMap(a -> a.getCreditBalance());
+//        throw new ExerciseNotCompletedException();
     }
 
 
