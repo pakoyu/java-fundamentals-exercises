@@ -37,7 +37,8 @@ public class CrazyOptionals {
      * @return optional object that holds text
      */
     public static Optional<String> optionalOfString(@Nullable String text) {
-        throw new ExerciseNotCompletedException();
+        return Optional.ofNullable(text);
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -47,7 +48,8 @@ public class CrazyOptionals {
      * @param amount          money to deposit
      */
     public static void deposit(AccountProvider accountProvider, BigDecimal amount) {
-        throw new ExerciseNotCompletedException();
+        accountProvider.getAccount().ifPresent(a -> a.setBalance(a.getBalance().add(amount)));
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -57,7 +59,8 @@ public class CrazyOptionals {
      * @return optional object that holds account
      */
     public static Optional<Account> optionalOfAccount(@Nonnull Account account) {
-        throw new ExerciseNotCompletedException();
+        return Optional.of(account);
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -69,7 +72,8 @@ public class CrazyOptionals {
      * @return account from provider or defaultAccount
      */
     public static Account getAccount(AccountProvider accountProvider, Account defaultAccount) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().orElse(defaultAccount);
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -80,7 +84,8 @@ public class CrazyOptionals {
      * @param accountService
      */
     public static void processAccount(AccountProvider accountProvider, AccountService accountService) {
-        throw new ExerciseNotCompletedException();
+        accountProvider.getAccount().ifPresentOrElse(v -> accountService.processAccount(v), () -> accountService.processWithNoAccount());
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -91,7 +96,8 @@ public class CrazyOptionals {
      * @return provided or generated account
      */
     public static Account getOrGenerateAccount(AccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().orElseGet(() -> new Account());
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
