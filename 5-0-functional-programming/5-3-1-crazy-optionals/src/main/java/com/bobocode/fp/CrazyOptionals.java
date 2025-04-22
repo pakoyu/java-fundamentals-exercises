@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.OptionalDouble;
 
@@ -143,7 +144,8 @@ public class CrazyOptionals {
      * @return optional gmail account
      */
     public static Optional<Account> retrieveAccountGmail(AccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().filter(a -> a.getEmail().split("@")[1].equals("gmail.com"));
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -156,7 +158,8 @@ public class CrazyOptionals {
      * @return account got from either accountProvider or fallbackProvider
      */
     public static Account getAccountWithFallback(AccountProvider accountProvider, AccountProvider fallbackProvider) {
-        throw new ExerciseNotCompletedException();
+        return accountProvider.getAccount().orElse(fallbackProvider.getAccount().orElseThrow(() -> {throw new  NoSuchElementException();}));
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
