@@ -12,10 +12,8 @@ import com.bobocode.util.ExerciseNotCompletedException;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.OptionalDouble;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * {@link CrazyOptionals} is an exercise class. Each method represents some operation with a {@link Account} and
@@ -158,7 +156,7 @@ public class CrazyOptionals {
      * @return account got from either accountProvider or fallbackProvider
      */
     public static Account getAccountWithFallback(AccountProvider accountProvider, AccountProvider fallbackProvider) {
-        return accountProvider.getAccount().orElse(fallbackProvider.getAccount().orElseThrow(() -> {throw new  NoSuchElementException();}));
+        return accountProvider.getAccount().or(() -> fallbackProvider.getAccount()).orElseThrow(() -> {throw new NoSuchElementException();});
 //        throw new ExerciseNotCompletedException();
     }
 
@@ -170,7 +168,8 @@ public class CrazyOptionals {
      * @return account with the highest balance
      */
     public static Account getAccountWithMaxBalance(List<Account> accounts) {
-        throw new ExerciseNotCompletedException();
+        return accounts.stream().max(Comparator.comparing(Account::getBalance)).orElseThrow(() -> {throw new NoSuchElementException();});
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -180,7 +179,8 @@ public class CrazyOptionals {
      * @return the lowest balance values
      */
     public static OptionalDouble findMinBalanceValue(List<Account> accounts) {
-        throw new ExerciseNotCompletedException();
+        return OptionalDouble.of(accounts.stream().min(Comparator.comparing(Account::getBalance)).orElseThrow(() -> {throw new NoSuchElementException();}).getBalance().doubleValue());
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
