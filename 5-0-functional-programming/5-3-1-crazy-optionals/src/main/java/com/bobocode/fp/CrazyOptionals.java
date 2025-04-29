@@ -190,7 +190,8 @@ public class CrazyOptionals {
      * @param accountService
      */
     public static void processAccountWithMaxBalance(List<Account> accounts, AccountService accountService) {
-        throw new ExerciseNotCompletedException();
+        accountService.processAccount(getAccountWithMaxBalance(accounts));
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -200,7 +201,8 @@ public class CrazyOptionals {
      * @return total credit balance
      */
     public static double calculateTotalCreditBalance(List<CreditAccount> accounts) {
-        throw new ExerciseNotCompletedException();
+        return accounts.stream().mapToDouble(a -> a.getCreditBalance().get().doubleValue()).sum();
+//        throw new ExerciseNotCompletedException();
     }
 }
 
