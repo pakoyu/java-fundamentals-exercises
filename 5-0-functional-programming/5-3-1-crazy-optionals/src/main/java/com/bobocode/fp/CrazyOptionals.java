@@ -179,7 +179,9 @@ public class CrazyOptionals {
      * @return the lowest balance values
      */
     public static OptionalDouble findMinBalanceValue(List<Account> accounts) {
-        return OptionalDouble.of(accounts.stream().min(Comparator.comparing(Account::getBalance)).orElseThrow(() -> {throw new NoSuchElementException();}).getBalance().doubleValue());
+        return accounts.stream().mapToDouble(a -> a.getBalance().doubleValue()).min();
+
+//        return OptionalDouble.of(accounts.stream().min(Comparator.comparing(Account::getBalance)).orElseThrow(() -> {throw new NoSuchElementException();}).getBalance().doubleValue());
 //        throw new ExerciseNotCompletedException();
     }
 
