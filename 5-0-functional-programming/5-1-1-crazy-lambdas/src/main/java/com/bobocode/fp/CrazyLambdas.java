@@ -140,8 +140,9 @@ public class CrazyLambdas {
      * @return function that composes functions with trim() function
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
-        UnaryOperator<Function<String, String>> r = (s) -> (s1) -> s1.toLowerCase().trim();
+        UnaryOperator<Function<String, String>> r = (s) -> (s1) -> s.apply(s1.trim());
         return r;
+
 //        throw new ExerciseNotCompletedException();
     }
 
@@ -167,7 +168,9 @@ public class CrazyLambdas {
      * @return a runnable consumer
      */
     public static Consumer<Runnable> newThreadRunnableConsumer() {
-        throw new ExerciseNotCompletedException();
+        Consumer<Runnable> c = (r) -> new Thread(r).start();
+        return c;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
@@ -195,7 +198,9 @@ public class CrazyLambdas {
      * @return a binary function that receiver predicate and function and compose them to create a new function
      */
     public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
-        throw new ExerciseNotCompletedException();
+        BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> f = (u, p) -> (x) -> p.test(x) ? u.applyAsInt(x) : x;
+        return f;
+//        throw new ExerciseNotCompletedException();
     }
 
     /**
