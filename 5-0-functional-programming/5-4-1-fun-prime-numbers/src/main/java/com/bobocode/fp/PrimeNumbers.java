@@ -2,6 +2,7 @@ package com.bobocode.fp;
 
 import com.bobocode.util.ExerciseNotCompletedException;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.IntConsumer;
@@ -97,6 +98,7 @@ public class PrimeNumbers {
      * @return a map with prime number grouped by the amount of digits
      */
     public static Map<Integer, List<Integer>> groupByAmountOfDigits(int n) {
+//        return stream(n).collect(Collectors.toMap(a -> String.valueOf(a).length() , a -> Arrays.asList(a), (a, b) -> { a.addAll(b); return a; }));
         throw new ExerciseNotCompletedException(); // todo: group n prime numbers by the amount of digits
     }
 }

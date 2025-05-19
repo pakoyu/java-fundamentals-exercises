@@ -9,5 +9,33 @@ package com.bobobode.cs;
  * @author Taras Boychuk
  */
 public class Node<T> {
+
+    T e;
+    Node<T> next;
+    Node<T> prew;
+
+    public Node(T e) {
+        this.e = e;
+    }
+
+    public void setNext(Node<T> n) {
+        next = n;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public void setPrew(Node<T> n) {
+        prew = n;
+    }
+
+    public Node<T> getPrew() {
+        return prew;
+    }
+
+    public T getElement() {
+        return e;
+    }
     // todo:
 }
