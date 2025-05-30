@@ -16,13 +16,30 @@ import com.bobocode.util.ExerciseNotCompletedException;
  */
 public class LinkedQueue<T> implements Queue<T> {
 
+    Node<T> head;
+    Node<T> tail;
+    int size = 0;
+
     /**
      * Adds an element to the end of the queue.
      *
      * @param element the element to add
      */
     public void add(T element) {
-        throw new ExerciseNotCompletedException(); // todo: implement this method
+        if (this.isEmpty()) {
+            tail = new Node<T>();
+            tail.value = element;
+            head = tail;
+        }
+        else {
+            Node<T> n = new Node<T>();
+            n.value = element;
+            tail.next = n;
+            n.prew = tail;
+            tail = n;
+        }
+        size++;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method
     }
 
     /**
@@ -31,7 +48,24 @@ public class LinkedQueue<T> implements Queue<T> {
      * @return an element that was retrieved from the head or null if queue is empty
      */
     public T poll() {
-        throw new ExerciseNotCompletedException(); // todo: implement this method
+        if (this.isEmpty()) {
+            return null;
+        }
+        if (size == 1) {
+            T t = head.value;
+            head = null;
+            tail = null;
+            size--;
+            return t;
+        }
+        T t = head.value;
+        Node<T> n = head.next;
+        head.next = null;
+        head = n;
+        head.prew = null;
+        size--;
+        return t;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method
     }
 
     /**
@@ -40,7 +74,8 @@ public class LinkedQueue<T> implements Queue<T> {
      * @return an integer value that is a size of queue
      */
     public int size() {
-        throw new ExerciseNotCompletedException(); // todo: implement this method
+        return size;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method
     }
 
     /**
@@ -49,6 +84,12 @@ public class LinkedQueue<T> implements Queue<T> {
      * @return {@code true} if the queue is empty, returns {@code false} if it's not
      */
     public boolean isEmpty() {
-        throw new ExerciseNotCompletedException(); // todo: implement this method
+        return size==0;
+//        throw new ExerciseNotCompletedException(); // todo: implement this method
+    }
+    public static class Node<T> {
+        T value = null;
+        Node<T> next;
+        Node<T> prew;
     }
 }
