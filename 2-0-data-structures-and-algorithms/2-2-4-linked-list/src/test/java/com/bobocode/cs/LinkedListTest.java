@@ -361,6 +361,8 @@ public class LinkedListTest {
     void remove() {
         addInternalElements(1, 2, 3, 4, 5);
 
+        System.out.println(intList.tail.value);
+
         int elementIndex = 2;
         int deletedElement = intList.remove(elementIndex); // element = 3
 
